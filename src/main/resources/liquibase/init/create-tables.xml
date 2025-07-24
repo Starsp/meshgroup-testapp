@@ -1,0 +1,80 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="gvassilev" id="init-USER">
+        <preConditions>
+            <not>
+                <tableExists tableName="USER"/>
+            </not>
+        </preConditions>
+        <createTable tableName="USER">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="PK_USER"/>
+            </column>
+            <column name="NAME" type="varchar(500)"/>
+            <column name="DATE_OF_BIRTH" type="date"/>
+            <column name="PASSWORD" type="varchar(500)"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet author="gvassilev" id="init-ACCOUNT">
+        <preConditions>
+            <not>
+                <tableExists tableName="ACCOUNT"/>
+            </not>
+        </preConditions>
+        <createTable tableName="ACCOUNT">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="PK_ACCOUNT"/>
+            </column>
+            <column name="USER_ID" type="bigint">
+                <constraints referencedTableName="USER" referencedColumnNames="ID" unique="true"
+                             foreignKeyName="FK_ACCOUNT_USER_ID"/>
+            </column>
+            <column name="BALANCE" type="decimal(19, 4)"/>
+            <column name="INITIAL_DEPOSIT" type="decimal(19, 4)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="gvassilev" id="init-PHONE_DATA">
+        <preConditions>
+            <not>
+                <tableExists tableName="PHONE_DATA"/>
+            </not>
+        </preConditions>
+        <createTable tableName="PHONE_DATA">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="PK_PHONE_DATA"/>
+            </column>
+            <column name="USER_ID" type="bigint">
+                <constraints referencedTableName="USER" referencedColumnNames="ID"
+                             foreignKeyName="FK_PHONE_DATA_USER_ID"/>
+            </column>
+            <column name="PHONE" type="VARCHAR(13)">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="gvassilev" id="init-EMAIL_DATA">
+        <preConditions>
+            <not>
+                <tableExists tableName="EMAIL_DATA"/>
+            </not>
+        </preConditions>
+        <createTable tableName="EMAIL_DATA">
+            <column name="ID" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="PK_EMAIL_DATA"/>
+            </column>
+            <column name="USER_ID" type="bigint">
+                <constraints referencedTableName="USER" referencedColumnNames="ID"
+                             foreignKeyName="FK_EMAIL_DATA_USER_ID"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(200)">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

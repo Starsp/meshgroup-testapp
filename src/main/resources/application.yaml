@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    hikari:
+      auto-commit: false
+      connection-timeout: 60000
+      maximum-pool-size: 10
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+  liquibase:
+    change-log: classpath:/liquibase/changelog-master.xml
+
+account:
+  increase-percentage: 1.1
+  max-allowed-multiplier: 2.07
+  increase-interval-seconds: 30
+
+jwt:
+  secret: testtesttesttesttesttesttesttesttesttesttesttesttest
+
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
